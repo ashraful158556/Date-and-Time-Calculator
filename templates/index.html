@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date & Time Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>📅 Date & Time Calculator ⏰</h1>
+        <form method="POST" action="/">
+            <label>Select Calculator Type:</label>
+            <select name="calculator_type" id="calculator_type" onchange="showFields()">
+                <option value="date_difference">Date Difference</option>
+                <option value="add_days">Add Days to Date</option>
+                <option value="subtract_days">Subtract Days from Date</option>
+                <option value="time_difference">Time Difference</option>
+            </select>
+
+            <!-- Dynamic Fields -->
+            <div id="dynamic-fields"></div>
+
+            <button type="submit">Calculate</button>
+        </form>
+        
+        {% if result is not none %}
+            <div class="result">
+                <h2>Result:</h2>
+                <p>{{ result }}</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        const fieldTemplates = {
+            "date_difference": `
+                <input type="date" name="date1" required placeholder="Enter First Date">
+                <input type="date" name="date2" required placeholder="Enter Second Date">
+            `,
+            "add_days": `
+                <input type="date" name="base_date" required placeholder="Enter Base Date">
+                <input type="number" name="days_to_add" required placeholder="Days to Add">
+            `,
+            "subtract_days": `
+                <input type="date" name="base_date" required placeholder="Enter Base Date">
+                <input type="number" name="days_to_subtract" required placeholder="Days to Subtract">
+            `,
+            "time_difference": `
+                <input type="time" name="time1" required placeholder="Enter First Time">
+                <input type="time" name="time2" required placeholder="Enter Second Time">
+            `
+        };
+
+        function showFields() {
+            const calculatorType = document.getElementById("calculator_type").value;
+            document.getElementById("dynamic-fields").innerHTML = fieldTemplates[calculatorType] || "";
+        }
+
+        window.onload = showFields;
+    </script>
+</body>
+</html>
