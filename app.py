@@ -41,7 +41,7 @@ def date_time_calculator():
         except Exception as e:
             result = f"Error: {e}"
 
-    return render_template("index.html", result=result, calculator_type=calculator_type)
+    return render_template(".templates\index.html", result=result, calculator_type=calculator_type)
 
 if __name__ == "__main__":
     app.run(debug=True)
